@@ -10,6 +10,11 @@
   "author": "Colin VanLang",
   "license": "ISC",
   "dependencies": {
+    "dropbox": "^2.5.1",
+    "express": "^4.14.1",
+    "hellojs": "^1.14.0",
+    "passport": "^0.3.2",
+    "passport-dropbox-oauth2": "^1.1.0",
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
     "scss": "^0.2.4"

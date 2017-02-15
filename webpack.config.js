@@ -6,7 +6,7 @@ var jsPath = path.join(__dirname, 'js');
 module.exports = {
   resolve: {
     root: __dirname,
-    extensions: ['', '.js', '.scss']
+    extensions: ['', '.js', '.jsx']
   },
   entry: entryPath,
   output: {
