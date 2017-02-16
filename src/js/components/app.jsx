@@ -1,5 +1,6 @@
 import React from 'react';
 import LoggedOutPage from 'js/components/logged_out';
+import LoggedInPage from 'js/components/logged_in';
 
 import { ajax } from 'jquery';
 
@@ -13,26 +14,18 @@ export default class App extends React.Component {
 
   componentDidMount() {
     ajax('/fetch_user').then((user) => {
-      this.setState({ DbxAccessToken: user.accessToken });
+      this.setState({ dbxAccessToken: user.accessToken });
     });
   }
 
   isLoggedIn() {
-    return !!this.state.DbxAccessToken;
+    return !!this.state.dbxAccessToken;
   }
 
   render() {
     if (!this.isLoggedIn()) {
       return <LoggedOutPage />;
     }
-
-    return (
-      <div>
-        {JSON.stringify(this.state)}
-        <a href="/logout" className="btn">
-          log out
-        </a>
-      </div>
-    );
+    return <LoggedInPage token={this.state.dbxAccessToken} />;
   }
 }

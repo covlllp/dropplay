@@ -1,7 +1,5 @@
 import React from 'react';
 
-// import 'scss/components/logged_out.scss';
-
 const LoggedOutPage = () => (
   <div className="container chalk">
     <div className="page-center text-center">
