@@ -21,6 +21,7 @@
     "express": "^4.14.1",
     "hellojs": "^1.14.0",
     "http": "0.0.0",
+    "jquery": "^3.1.1",
     "morgan": "^1.8.1",
     "passport": "^0.3.2",
     "passport-dropbox-oauth2": "^1.1.0",

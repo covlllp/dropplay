@@ -1,3 +1,54 @@
-.a {
-  background-color: pink;
+@import 'colors';
+@import 'button';
+
+html {
+  box-sizing: border-box;
+}
+
+*, :after, :before {
+  box-sizing: inherit;
+}
+
+body {
+  font: 14px/1 "Atlas Grotesk", "Chalkboard", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 1.42857143;
+  color: $color_ink;
+  margin: 0;
+}
+
+#react-content {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.container {
+  height: 100%;
+  width: 100%;
+}
+
+.title {
+  font: inherit;
+  font-size: 30px;
+  line-height: 1.5;
+  margin-bottom: 32px;
+  margin-top: 0;
+}
+
+p {
+  margin-bottom: 24px;
+}
+
+.page-center {
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.text-center {
+  text-align: center;
 }

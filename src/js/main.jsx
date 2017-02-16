@@ -2,15 +2,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import 'scss/style.scss';
+import App from 'js/components/app';
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
-    <a
-      href="/auth/dropbox"
-    >
-      Click me
-    </a>,
+    <App />,
     document.getElementById('react-content')
   );
 });
