@@ -1,6 +1,9 @@
 import React from 'react';
 import Dropbox from 'dropbox';
 
+import CellList from 'js/components/cell_list';
+import { CellTypes } from 'js/components/cell_list_item';
+
 export default class LoggedInPage extends React.Component {
   constructor(props) {
     super(props);
@@ -14,21 +17,30 @@ export default class LoggedInPage extends React.Component {
 
   componentDidMount() {
     this.getFolderList()
-      .then((folders) => {
-        this.setState({ folders });
-      }).catch((err) => { console.error(err); });
+    .then((folders) => {
+      this.setState({ folders });
+    });
   }
 
   getFolderList(path = '') {
     return this.dbx.filesListFolder({ path })
-      .then((res) => {
-        const { entries } = res;
-        return entries.filter((entry) => entry['.tag'].indexOf('folder') !== -1);
+    .then((res) => {
+      const { entries } = res;
+      return entries.filter((entry) => entry['.tag'].indexOf('folder') !== -1)
+      .map((entry) => {
+        const modEntry = entry;
+        modEntry.type = CellTypes.FOLDER;
+        return modEntry;
       });
+    });
   }
 
   render() {
-    return <div>{JSON.stringify(this.state)}</div>;
+    return (
+      <div>
+        <CellList items={this.state.folders} />
+      </div>
+    );
   }
 }
 
