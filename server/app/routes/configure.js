@@ -10,6 +10,7 @@ var srcPath = path.join(rootPath, 'src');
 module.exports = function setRoutes(app) {
   // Serve static images
   app.use('/images', express.static(path.join(srcPath, 'images')))
+  app.use('/css', express.static(path.join(srcPath, 'css')))
 
   // dropbox oauth
   app.get('/auth/dropbox', passport.authenticate('dropbox-oauth2'));

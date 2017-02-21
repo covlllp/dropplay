@@ -13,7 +13,7 @@ var createApplication = new Promise(function(resolve, reject) {
 function startServer() {
   var PORT = process.env.PORT || 3000;
   server.listen(PORT, function() {
-    console.log(chalk.blue('Server started on port ', chalk.magenta(PORT)));
+    console.log(chalk.blue('Server started on port', chalk.magenta(PORT)));
   });
 }
 
