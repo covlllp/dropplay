@@ -2,6 +2,7 @@ import React from 'react';
 import Dropbox from 'dropbox';
 
 import FolderSelector from 'js/components/folder_selector';
+import MusicPlayer from 'js/components/music_player';
 import TitleBar from 'js/components/title_bar';
 import { CellTypes } from 'js/components/cell_list_item';
 
@@ -39,12 +40,26 @@ export default class LoggedInPage extends React.Component {
     });
   }
 
+  getFileList(path) {
+    return this.dbx.filesListFolder({ path })
+    .then((res) => {
+      const { entries } = res;
+      return entries.filter((entry) => entry['.tag'].indexOf('file') !== -1);
+    });
+  }
+
   isFolderSelected() {
     return !!this.state.currentPath;
   }
 
   updateCurrentPath(newPath) {
     this.setState({ currentPath: newPath });
+    if (newPath) {
+      this.getFileList(newPath)
+      .then((files) => {
+        this.setState({ files });
+      });
+    }
   }
 
   clearCurrentPath() {
@@ -68,14 +83,13 @@ export default class LoggedInPage extends React.Component {
 
   render() {
     const body = this.isFolderSelected() ?
-      <div /> :
+      <MusicPlayer files={this.state.files} dbx={this.dbx} /> :
       <FolderSelector folders={this.state.folders} onFolderSelect={this.updatePathFromCell} />;
 
     return (
       <div>
         {this.renderTitleBar()}
         <div className="title-body">
-          {this.state.currentPath}
           {body}
         </div>
       </div>
