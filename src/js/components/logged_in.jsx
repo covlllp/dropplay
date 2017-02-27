@@ -14,6 +14,8 @@ export default class LoggedInPage extends React.Component {
       files: [],
     };
     this.updateCurrentPath = this.updateCurrentPath.bind(this);
+    this.updatePathFromCell = this.updatePathFromCell.bind(this);
+    this.clearCurrentPath = this.clearCurrentPath.bind(this);
     this.dbx = new Dropbox({ accessToken: this.props.token });
   }
 
@@ -41,21 +43,40 @@ export default class LoggedInPage extends React.Component {
     return !!this.state.currentPath;
   }
 
-  updateCurrentPath(cellData) {
-    this.setState({ currentPath: `/${cellData.name}` });
+  updateCurrentPath(newPath) {
+    this.setState({ currentPath: newPath });
+  }
+
+  clearCurrentPath() {
+    this.updateCurrentPath();
+  }
+
+  updatePathFromCell(cellData) {
+    this.updateCurrentPath(cellData.data.path_lower);
+  }
+
+  renderTitleBar() {
+    let folderSelectButton = null;
+    if (this.isFolderSelected()) {
+      folderSelectButton = (
+        <button onClick={this.clearCurrentPath} className="btn">Select new folder</button>
+      );
+    }
+    const logoutButton = <a className="btn" href="/logout">Log out</a>;
+    return <TitleBar rightItems={logoutButton} leftItems={folderSelectButton} />;
   }
 
   render() {
-    // const body = this.isFolderSelected() ?
-    //   <div /> :
-    //   <FolderSelector folders={this.state.folders} onFolderSelect={this.updateCurrentPath} />;
+    const body = this.isFolderSelected() ?
+      <div /> :
+      <FolderSelector folders={this.state.folders} onFolderSelect={this.updatePathFromCell} />;
 
     return (
       <div>
-        <TitleBar />
+        {this.renderTitleBar()}
         <div className="title-body">
           {this.state.currentPath}
-          <FolderSelector folders={this.state.folders} onFolderSelect={this.updateCurrentPath} />
+          {body}
         </div>
       </div>
     );

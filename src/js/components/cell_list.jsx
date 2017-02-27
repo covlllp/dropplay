@@ -28,6 +28,7 @@ export default class CellList extends React.Component {
         onSelect={onSelect}
         isSelected={this.state.selectedCell === i}
         onButtonClick={this.props.onButtonClick}
+        itemData={item}
         key={i}
       />);
     });

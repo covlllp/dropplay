@@ -1,14 +1,21 @@
 import React from 'react';
 
-const TitleBar = () => (
-  <div className="title-bar">
-    <div className="title-bar__left" />
-    <div className="title-bar__right">
-      <a className="btn" href="/logout">
-        Log out
-      </a>
-    </div>
-  </div>
-);
+export default class TitleBar extends React.PureComponent {
+  render() {
+    return (
+      <div className="title-bar">
+        <div className="title-bar__left">
+          {this.props.leftItems}
+        </div>
+        <div className="title-bar__right">
+          {this.props.rightItems}
+        </div>
+      </div>
+    );
+  }
+}
 
-export default TitleBar;
+TitleBar.propTypes = {
+  leftItems: React.PropTypes.node,
+  rightItems: React.PropTypes.node,
+};

@@ -20,6 +20,7 @@ export default class CellListItem extends React.PureComponent {
     this.props.onButtonClick({
       name: this.props.name,
       secondaryText: this.props.secondaryText,
+      data: this.props.itemData,
     });
   }
 
@@ -85,4 +86,5 @@ CellListItem.propTypes = {
   isSelected: React.PropTypes.bool,
   onSelect: React.PropTypes.func,
   onButtonClick: React.PropTypes.func,
+  itemData: React.PropTypes.object,
 };
