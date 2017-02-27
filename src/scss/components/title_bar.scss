@@ -1,0 +1,13 @@
+@import './../colors';
+
+.title-bar {
+  position: fixed;
+  width: 100%;
+  height: 63px;
+  border-bottom: 1px solid $color_stone_sixteen;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+  background-color: $color_chalk;
+}

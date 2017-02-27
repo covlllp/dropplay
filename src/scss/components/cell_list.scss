@@ -1,5 +1,39 @@
+@import './../colors';
+
 .cell-list {
   .item {
+    position: relative;
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid $color_stone_sixteen;
 
+    &.selected {
+      background-color: $color_blue_sixteen;
+      border-bottom: 1px solid $color_blue_forty;
+    }
+
+    &:hover {
+      color: $color_blue;
+    }
+
+    &__image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 64px;
+      height: 64px;
+
+      img {
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+    &__btn {
+      position: absolute;
+      right: 16px;
+    }
   }
 }

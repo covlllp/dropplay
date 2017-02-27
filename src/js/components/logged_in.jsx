@@ -1,17 +1,19 @@
 import React from 'react';
 import Dropbox from 'dropbox';
 
-import CellList from 'js/components/cell_list';
+import FolderSelector from 'js/components/folder_selector';
+import TitleBar from 'js/components/title_bar';
 import { CellTypes } from 'js/components/cell_list_item';
 
 export default class LoggedInPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentPath: null,
+      currentPath: '',
       folders: [],
       files: [],
     };
+    this.updateCurrentPath = this.updateCurrentPath.bind(this);
     this.dbx = new Dropbox({ accessToken: this.props.token });
   }
 
@@ -35,10 +37,26 @@ export default class LoggedInPage extends React.Component {
     });
   }
 
+  isFolderSelected() {
+    return !!this.state.currentPath;
+  }
+
+  updateCurrentPath(cellData) {
+    this.setState({ currentPath: `/${cellData.name}` });
+  }
+
   render() {
+    // const body = this.isFolderSelected() ?
+    //   <div /> :
+    //   <FolderSelector folders={this.state.folders} onFolderSelect={this.updateCurrentPath} />;
+
     return (
       <div>
-        <CellList items={this.state.folders} />
+        <TitleBar />
+        <div className="title-body">
+          {this.state.currentPath}
+          <FolderSelector folders={this.state.folders} onFolderSelect={this.updateCurrentPath} />
+        </div>
       </div>
     );
   }

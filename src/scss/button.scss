@@ -14,16 +14,18 @@
 
   // Secondary traits
   font-weight: 400;
-  border: 1px solid $color_stone;
+  border: 1px solid $color_stone_forty;
   background-color: white;
   color: $color_ink;
 
   &:hover {
+    text-decoration: none;
     color: $color_blue_light;
     border: 1px solid $color_blue_light;
   }
 
   &:active {
+    text-decoration: none;
     color: $color_blue_dark;
     border: 1px solid $color_blue_dark;
   }

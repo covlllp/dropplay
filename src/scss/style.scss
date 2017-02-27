@@ -1,6 +1,8 @@
 @import 'colors';
 @import 'button';
 
+$TITLE_BAR_HEIGHT: 63px;
+
 html {
   box-sizing: border-box;
 }
@@ -24,9 +26,26 @@ body {
   right: 0;
 }
 
-.container {
+.page {
   height: 100%;
   width: 100%;
+}
+
+.title-bar {
+  position: fixed;
+  width: 100%;
+  height: $TITLE_BAR_HEIGHT;
+  border-bottom: 1px solid $color_stone_sixteen;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+  background-color: $color_chalk;
+  z-index: 1;
+}
+
+.title-body {
+  padding-top: $TITLE_BAR_HEIGHT;
 }
 
 .title {
@@ -37,12 +56,19 @@ body {
   margin-top: 0;
 }
 
+.sub-title {
+  font: inherit;
+  font-size: 20px;
+  line-height: 1.5;
+  margin: 16px 0;
+}
+
 p {
   margin-bottom: 24px;
 }
 
 .page-center {
-  display: inline-block;
+  width: 100%;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -51,4 +77,8 @@ p {
 
 .text-center {
   text-align: center;
+}
+
+.right {
+  float: right;
 }
