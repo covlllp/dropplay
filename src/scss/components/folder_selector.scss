@@ -1,0 +1,14 @@
+.folder-selector {
+  .folder {
+    &-header {
+      position: fixed;
+      background-color: white;
+      width: 100%;
+      z-index: 1;
+    }
+
+    &-body {
+      padding-top: 62px;
+    }
+  }
+}

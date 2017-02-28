@@ -1,6 +1,7 @@
 import React from 'react';
 import CellListItem from 'js/components/cell_list_item';
 
+import classNames from 'classnames';
 import 'scss/components/cell_list.scss';
 
 export default class CellList extends React.Component {
@@ -34,8 +35,9 @@ export default class CellList extends React.Component {
     });
   }
   render() {
+    const classes = classNames('cell-list', this.props.className);
     return (
-      <div className="cell-list">
+      <div className={classes}>
         {this.renderItems()}
       </div>
     );
@@ -46,5 +48,6 @@ CellList.propTypes = {
   items: React.PropTypes.arrayOf(React.PropTypes.shape(CellListItem.propTypes)),
   onButtonClick: React.PropTypes.func,
   buttonText: React.PropTypes.string,
+  className: React.PropTypes.string,
 };
 

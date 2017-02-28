@@ -12,7 +12,10 @@ export default class MusicPlayer extends React.Component {
       currentSongIndex: 0,
       currentSongInfo: {},
       isPlaying: false,
+      isReady: false,
     };
+
+    this.togglePlay = this.togglePlay.bind(this);
   }
 
   componentDidMount() {
@@ -21,6 +24,10 @@ export default class MusicPlayer extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.files.length && this.props.files.length) this.updateSongInfo();
+  }
+
+  getAudioTag() {
+    return this.refs.audio;
   }
 
   getSongLink() {
@@ -54,11 +61,49 @@ export default class MusicPlayer extends React.Component {
     });
   }
 
+  playSong() {
+    this.getAudioTag().play();
+    this.setState({ isPlaying: true });
+  }
+
+  pauseSong() {
+    this.getAudioTag().pause();
+    this.setState({ isPlaying: false });
+  }
+
+  togglePlay() {
+    if (this.state.isPlaying) this.pauseSong();
+    else this.playSong();
+  }
+
   renderAudioTag() {
     if (this.state.currentSongInfo.link) {
-      return <audio src={this.state.currentSongInfo.link} controls autoPlay />;
+      if (this.state.isReady) return <audio src={this.state.currentSongInfo.link} ref="audio" />;
+      return <audio src={this.state.currentSongInfo.link} ref="audio" disabled />;
     }
     return null;
+  }
+
+  renderTitle() {
+    return (
+      <h2 className="sub-title">
+        {this.state.currentSongInfo.name}
+      </h2>
+    );
+  }
+
+  renderRadio() {
+    return (
+      <p>
+        <img src="images/radio.png" alt="radio" />
+      </p>
+    );
+  }
+
+  renderControls() {
+    return (
+      <button className="btn" onClick={this.togglePlay}>Toggle</button>
+    );
   }
 
   renderFiles() {
@@ -67,9 +112,11 @@ export default class MusicPlayer extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="container page-center text-center">
         {this.renderAudioTag()}
-        {this.renderFiles()}
+        {this.renderTitle()}
+        {this.renderRadio()}
+        {this.renderControls()}
       </div>
     );
   }
