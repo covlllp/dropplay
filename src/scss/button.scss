@@ -18,13 +18,13 @@
   background-color: white;
   color: $color_ink;
 
-  &:hover {
+  &:hover:enabled {
     text-decoration: none;
     color: $color_blue_light;
     border: 1px solid $color_blue_light;
   }
 
-  &:active {
+  &:active:enabled {
     text-decoration: none;
     color: $color_blue_dark;
     border: 1px solid $color_blue_dark;
@@ -36,11 +36,11 @@
     color: white;
     background-color: $color_blue;
 
-    &:hover {
+    &:hover:enabled {
       background-color: $color_blue_light;
     }
 
-    &:active {
+    &:active:enabled {
       background-color: $color_blue_dark;
     }
   }

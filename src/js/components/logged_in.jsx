@@ -10,7 +10,7 @@ export default class LoggedInPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentPath: '',
+      currentPath: '/unwind',
       folders: [],
       files: [],
     };
@@ -21,11 +21,19 @@ export default class LoggedInPage extends React.Component {
   }
 
   componentDidMount() {
-    this.getFolderList()
-    .then((folders) => {
-      this.setState({ folders });
-    });
+    this.getFileOrFolder();
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.currentPath !== this.state.currentPath) this.getFileOrFolder();
+  }
+
+  getFileOrFolder() {
+    const { currentPath } = this.state;
+    if (currentPath) this.getFileList(currentPath);
+    else this.getFolderList();
+  }
+
 
   getFolderList(path = '') {
     return this.dbx.filesListFolder({ path })
@@ -37,6 +45,10 @@ export default class LoggedInPage extends React.Component {
         modEntry.type = CellTypes.FOLDER;
         return modEntry;
       });
+    }).then((folders) => {
+      this.setState({ folders });
+    }).catch((err) => {
+      console.error(err);
     });
   }
 
@@ -45,6 +57,10 @@ export default class LoggedInPage extends React.Component {
     .then((res) => {
       const { entries } = res;
       return entries.filter((entry) => entry['.tag'].indexOf('file') !== -1);
+    }).then((files) => {
+      this.setState({ files });
+    }).catch((err) => {
+      console.error(err);
     });
   }
 
@@ -55,10 +71,7 @@ export default class LoggedInPage extends React.Component {
   updateCurrentPath(newPath) {
     this.setState({ currentPath: newPath });
     if (newPath) {
-      this.getFileList(newPath)
-      .then((files) => {
-        this.setState({ files });
-      });
+      this.getFileList(newPath);
     }
   }
 

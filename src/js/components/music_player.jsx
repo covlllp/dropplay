@@ -16,18 +16,27 @@ export default class MusicPlayer extends React.Component {
     };
 
     this.togglePlay = this.togglePlay.bind(this);
+    this.audioReady = this.audioReady.bind(this);
   }
 
   componentDidMount() {
     if (this.validSongs().length) this.updateSongInfo();
+
+    const audioElement = this.getAudioTag();
+    audioElement.addEventListener('canplay', this.audioReady);
   }
 
   componentDidUpdate(prevProps) {
     if (!prevProps.files.length && this.props.files.length) this.updateSongInfo();
   }
 
+  componentWillUnmount() {
+    const audioElement = this.getAudioTag();
+    audioElement.removeEventListener('canplay', this.audioReady);
+  }
+
   getAudioTag() {
-    return this.refs.audio;
+    return this.audio;
   }
 
   getSongLink() {
@@ -76,12 +85,18 @@ export default class MusicPlayer extends React.Component {
     else this.playSong();
   }
 
+  audioReady() {
+    this.setState({ isReady: true });
+  }
+
   renderAudioTag() {
+    let src = '';
     if (this.state.currentSongInfo.link) {
-      if (this.state.isReady) return <audio src={this.state.currentSongInfo.link} ref="audio" />;
-      return <audio src={this.state.currentSongInfo.link} ref="audio" disabled />;
+      src = this.state.currentSongInfo.link;
     }
-    return null;
+    return (
+      <audio src={src} ref={(c) => { this.audio = c; }} />
+    );
   }
 
   renderTitle() {
@@ -102,7 +117,9 @@ export default class MusicPlayer extends React.Component {
 
   renderControls() {
     return (
-      <button className="btn" onClick={this.togglePlay}>Toggle</button>
+      <button className="btn" onClick={this.togglePlay} disabled={!this.state.isReady}>
+        Toggle
+      </button>
     );
   }
 
