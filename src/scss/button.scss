@@ -37,10 +37,14 @@
     background-color: $color_blue;
 
     &:hover:enabled {
+      border: none;
+      color: white;
       background-color: $color_blue_light;
     }
 
     &:active:enabled {
+      border: none;
+      color: white;
       background-color: $color_blue_dark;
     }
   }

@@ -17,6 +17,8 @@ export default class MusicPlayer extends React.Component {
 
     this.togglePlay = this.togglePlay.bind(this);
     this.audioReady = this.audioReady.bind(this);
+    this.goToNextSong = this.goToNextSong.bind(this);
+    this.goToPreviousSong = this.goToPreviousSong.bind(this);
   }
 
   componentDidMount() {
@@ -85,6 +87,23 @@ export default class MusicPlayer extends React.Component {
     else this.playSong();
   }
 
+  goToSongIndex(index) {
+    this.setState({
+      currentSongIndex: index,
+      currentSongInfo: {},
+      isReady: false,
+    });
+    this.updateSongInfo();
+  }
+
+  goToNextSong() {
+    this.goToSongIndex(++this.state.currentSongIndex);
+  }
+
+  goToPreviousSong() {
+    this.goToSongIndex(--this.state.currentSongIndex);
+  }
+
   audioReady() {
     this.setState({ isReady: true });
   }
@@ -115,25 +134,43 @@ export default class MusicPlayer extends React.Component {
     );
   }
 
-  renderControls() {
+  renderPlayButton() {
+    const text = this.state.isPlaying ? 'Pause' : 'Play';
     return (
       <button className="btn" onClick={this.togglePlay} disabled={!this.state.isReady}>
-        Toggle
+        {text}
       </button>
     );
   }
 
+  renderControls() {
+    return (
+      <div>
+        <button className="btn" onClick={this.goToPreviousSong}>Previous</button>
+        {this.renderPlayButton()}
+        <button className="btn" onClick={this.goToNextSong}>Next</button>
+      </div>
+    );
+  }
+
   renderFiles() {
-    return this.props.files.map((file) => <div>{file.name}</div>);
+    return this.props.files.map((file, index) => {
+      if (index === this.state.currentSongIndex) {
+        return <div><b>{file.name}</b></div>;
+      }
+      return <div>{file.name}</div>;
+    });
   }
 
   render() {
+    console.log(this.state);
     return (
       <div className="container page-center text-center">
         {this.renderAudioTag()}
         {this.renderTitle()}
         {this.renderRadio()}
         {this.renderControls()}
+        {this.renderFiles()}
       </div>
     );
   }
